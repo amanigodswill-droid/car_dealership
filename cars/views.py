@@ -1,5 +1,7 @@
+from django.contrib.auth import login
+from django.contrib.auth.forms import AuthenticationForm
 from django.shortcuts import render, redirect, get_object_or_404
-from .forms import CarForm
+from .forms import CarForm, RegisterForm
 from .models import Car
 
 def car_list(request):
@@ -37,3 +39,25 @@ def car_delete(request, pk):
         car.delete()
         return redirect('car_list')
     return render(request, 'cars/car_confirm_delete.html', {'car': car})
+
+def register(request):
+    if request.method == 'POST':
+        form = RegisterForm(request.POST)
+        if form.is_valid():
+            user = form.save()
+            login(request, user)
+            return redirect('car_list')
+    else:
+        form = RegisterForm()
+    return render(request, 'cars/register.html', {'form': form})
+
+def user_login(request):
+    if request.method == 'POST':
+        form = AuthenticationForm(request, data=request.POST)
+        if form.is_valid():
+            user = form.get_user()
+            login(request, user)
+            return redirect('car_list')
+    else:
+        form = AuthenticationForm()
+    return render(request, 'cars/login.html', {'form': form})
