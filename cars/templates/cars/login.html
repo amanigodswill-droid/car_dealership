@@ -1,13 +1,20 @@
 {% extends 'cars/base.html' %}
-{% block title %}Login{% endblock %}
+{% block title %}Login - Mipango Car Dealership{% endblock %}
 {% block content %}
-<h2>Login</h2>
 
-<form method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Login</button>
-</form>
+<div class="auth-container">
+    <div class="auth-card">
+        <h2>Welcome Back</h2>
+        <p class="auth-subtitle">Login to your Mipango account.</p>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
 
-<p>Don't have an account?<a href="{% url 'register' %}">Register</a></p>
+        <button type="submit" class="auth-button">Login</button>
+    </form>
+    <p class="auth-link">Don't have an account?<a href="{% url 'register' %}">Create an account</a></p>
+</div>
+
+</div>
+
 {% endblock %}

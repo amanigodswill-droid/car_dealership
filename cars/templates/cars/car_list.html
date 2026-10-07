@@ -1,19 +1,32 @@
 {% extends 'cars/base.html' %}
-{% block title %}Cars{% endblock %}
+{% block title %}Mipango Car Dealership{% endblock %}
 {% block content %}
-<h2>Available Cars</h2>
-{% for car in cars %}
-    <div>
-        {% if car.image %}
-            <img src="{{ car.image.url }}" alt="{{ car.brand }} {{ car.model }}" width="250">
-        {% endif %}
-        <h3>{{ car.brand }} {{ car.model }}</h3>
-        <p>Year: {{ car.year }}</p>
-        <p>Price: KSh {{ car.price }}</p>
 
-        <a href="{% url 'car_detail' car.id %}">View Details</a>
+<section class="hero">
+    <h2>Find Your Next Car</h2>
+    <p>Quality vehicles at prices you can trust.</p>
+    <a href="#cars" class="button">View Cars</a>
+</section>
+
+<section class="cars-section" id="cars">
+    <h2>Available Cars</h2>
+    <div class="car-grid">
+        {% for car in cars %}
+            <div class="car-card">
+
+                {% if car.image %}
+                    <img src="{{ car.image.url }}" alt="{{ car.brand }} {{ car.model }}">
+                {% endif %}
+
+                <h3>{{ car.brand }} {{ car.model }}</h3>
+                <p>Year: {{ car.year }}</p>
+                <p>Price: KSh {{ car.price }}</p>
+                <a href="{% url 'car_detail' car.id %}">View Details</a>
+            </div>
+        {% empty %}
+            <p>No cars have been added yet.</p>
+        {% endfor %}
     </div>
-{% empty %}
-    <p>No cars have been added yet.</p>
-{% endfor %}
+</section>
+
 {% endblock %}

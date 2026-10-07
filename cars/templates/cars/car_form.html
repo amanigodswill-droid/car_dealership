@@ -1,13 +1,32 @@
 {% extends 'cars/base.html' %}
-{% block title %}Add Car{% endblock %}
+{% block title %}{% if car %}Edit Car{% else %}Add Car{% endif %} - Mipango Car Dealership{% endblock %}
 {% block content %}
-<h2>{% if car %}Edit Car{% else %}Add Car{% endif %}</h2>
-<form method="post" enctype="multipart/form-data">
-    {% csrf_token %}
-    {{ form.as_p }}
 
-    <button type="submit">Save Car</button>
-</form>
+<div class="form-container">
+    <div class="form-card">
+        <h2>{% if car %}Edit Car{% else %}Add a Car{% endif %}</h2>
 
-<a href="{% url 'car_list' %}">Cancel</a>
+        <p class="form-subtitle">
+            {% if car %}
+                Update the details of this vehicle.
+            {% else %}
+                Add a new vehicle to the dealership.
+            {% endif %}
+        </p>
+
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{ form.as_p }}
+
+            <button type="submit" class="form-button">
+                {% if car %}Update Car{% else %}Add Car{% endif %}
+            </button>
+        </form>
+
+        <div class="form-link">
+            <a href="{% url 'car_list' %}">Back to Cars</a>
+        </div>
+    </div>
+</div>
+
 {% endblock %}

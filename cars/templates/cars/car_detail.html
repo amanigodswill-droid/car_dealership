@@ -1,17 +1,27 @@
 {% extends 'cars/base.html' %}
-{% block title %}{{ car.brand }} {{ car.model }}{% endblock %}
+{% block title %}{{ car.brand }} {{ car.model }} - Mipango Car Dealership{% endblock %}
 {% block content %}
-<h2>{{ car.brand }} {{ car.model }}</h2>
 
-{% if car.image %}
-    <img src="{{ car.image.url }}" alt="{{ car.brand }} {{ car.model }}" width="400">
-{% endif %}
+<div class="detail-container">
+    <div class="detail-card">
+        {% if car.image %}
+            <img class="detail-image" src="{{ car.image.url }}" alt="{{ car.brand }} {{ car.model }}">
+        {% endif %}
 
-<p><strong>Year:</strong> {{ car.year }}</p>
-<p><strong>Price:</strong> KSh {{ car.price }}</p>
-<p><strong>Description:</strong> {{ car.description }}</p>
+        <div class="detail-content">
+            <h2>{{ car.brand }} {{ car.model }}</h2>
+            <p><strong>Year:</strong> {{ car.year }}</p>
+            <p><strong>Price:</strong> KSh {{ car.price }}</p>
+            <p><strong>Description:</strong></p>
+            <p>{{ car.description }}</p>
 
-<a href="{% url 'car_update' car.id %}">Edit Car</a>
-<a href="{% url 'car_delete' car.id %}">Delete Car</a>
-<a href="{% url 'car_list' %}">Back to Cars</a>
+            <div class="detail-actions">
+                <a href="{% url 'car_update' car.id %}" class="action-button edit-button">Edit Car</a>
+                <a href="{% url 'car_delete' car.id %}" class="action-button delete-button">Delete Car</a>
+                <a href="{% url 'car_list' %}" class="action-button back-button">Back to Cars</a>
+            </div>
+        </div>
+    </div>
+</div>
+
 {% endblock %}
