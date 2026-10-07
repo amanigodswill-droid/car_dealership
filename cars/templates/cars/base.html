@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Car Dealership{% endblock %}</title>
+</head>
+<body>
+    <header>
+        <h1>Car Dealership</h1>
+        <nav>
+            <a href="{% url 'car_list' %}">Cars</a>
+            <a href="{% url 'car_create' %}">Add Car</a>
+        </nav>
+    </header>
+
+    <main>
+        {% block content %}
+        {% endblock %}
+    </main>
+</body>
+</html>

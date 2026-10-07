@@ -1,0 +1,17 @@
+{% extends 'cars/base.html' %}
+{% block title %}{{ car.brand }} {{ car.model }}{% endblock %}
+{% block content %}
+<h2>{{ car.brand }} {{ car.model }}</h2>
+
+{% if car.image %}
+    <img src="{{ car.image.url }}" alt="{{ car.brand }} {{ car.model }}" width="400">
+{% endif %}
+
+<p><strong>Year:</strong> {{ car.year }}</p>
+<p><strong>Price:</strong> KSh {{ car.price }}</p>
+<p><strong>Description:</strong> {{ car.description }}</p>
+
+<a href="{% url 'car_update' car.id %}">Edit Car</a>
+<a href="{% url 'car_delete' car.id %}">Delete Car</a>
+<a href="{% url 'car_list' %}">Back to Cars</a>
+{% endblock %}
