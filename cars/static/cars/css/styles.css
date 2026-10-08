@@ -9,6 +9,8 @@ body {
     color: #1f2937;
 }
 
+/* Header and navigation */
+
 header {
     background-color: #0b1f3a;
     color: white;
@@ -20,10 +22,16 @@ header h1 {
     color: #f4b942;
 }
 
+nav {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
 nav a {
     color: white;
     text-decoration: none;
-    margin-right: 20px;
     font-weight: bold;
 }
 
@@ -31,11 +39,36 @@ nav a:hover {
     color: #f4b942;
 }
 
+nav span {
+    color: #f4b942;
+    font-weight: bold;
+}
+
+/* Logout button */
+
+.logout-button {
+    background: none;
+    border: none;
+    color: white;
+    font: inherit;
+    font-weight: bold;
+    cursor: pointer;
+    padding: 0;
+}
+
+.logout-button:hover {
+    color: #f4b942;
+}
+
+/* Main content */
+
 main {
     max-width: 1100px;
     margin: 0 auto;
     padding: 30px 20px;
 }
+
+/* Homepage hero */
 
 .hero {
     background: linear-gradient(135deg, #0b1f3a, #164e78);
@@ -69,6 +102,8 @@ main {
 .button:hover {
     background-color: #ffd166;
 }
+
+/* Cars section */
 
 .cars-section h2 {
     color: #0b1f3a;
@@ -116,13 +151,7 @@ main {
     color: #f4b942;
 }
 
-footer {
-    background-color: #0b1f3a;
-    color: white;
-    text-align: center;
-    padding: 25px;
-    margin-top: 60px;
-}
+/* Authentication pages */
 
 .auth-container {
     min-height: 70vh;
@@ -151,6 +180,7 @@ footer {
     text-align: center;
     color: #666;
     margin-bottom: 25px;
+    line-height: 1.6;
 }
 
 .auth-card form p {
@@ -209,20 +239,7 @@ footer {
     color: #f4b942;
 }
 
-.logout-button {
-    background: none;
-    border: none;
-    color: white;
-    font: inherit;
-    font-weight: bold;
-    cursor: pointer;
-    padding: 0;
-    margin: 0 20px 0 0;
-}
-
-.logout-button:hover {
-    color: #f4b942;
-}
+/* Form pages */
 
 .form-container {
     min-height: 70vh;
@@ -319,6 +336,35 @@ footer {
     color: #f4b942;
 }
 
+/* Car image upload */
+
+.form-card input[type="file"] {
+    width: 100%;
+    padding: 10px;
+    background-color: #f4f6f8;
+    border: 1px solid #ccd3da;
+    border-radius: 6px;
+    color: #555;
+    cursor: pointer;
+}
+
+.form-card input[type="file"]::file-selector-button {
+    background-color: #0b1f3a;
+    color: white;
+    border: none;
+    padding: 9px 16px;
+    margin-right: 12px;
+    border-radius: 5px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.form-card input[type="file"]::file-selector-button:hover {
+    background-color: #164e78;
+}
+
+/* Car details */
+
 .detail-container {
     max-width: 800px;
     margin: 30px auto;
@@ -397,27 +443,186 @@ footer {
     background-color: #164e78;
 }
 
-.form-card input[type="file"] {
-    width: 100%;
-    padding: 10px;
-    background-color: #f4f6f8;
-    border: 1px solid #ccd3da;
-    border-radius: 6px;
-    color: #555;
-    cursor: pointer;
+/* Password requirements */
+
+.password-requirements {
+    background-color: #f8fafc;
+    border: 1px solid #e1e6eb;
+    border-radius: 8px;
+    padding: 16px 18px;
+    margin: 8px 0 22px;
 }
 
-.form-card input[type="file"]::file-selector-button {
+.password-requirements p {
+    margin: 0 0 12px;
+    color: #0b1f3a;
+    font-weight: bold;
+    font-size: 15px;
+}
+
+.requirement {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    color: #777;
+    font-size: 14px;
+    margin: 9px 0;
+    line-height: 1.4;
+}
+
+.requirement span {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background-color: #dc3545;
+    color: white;
+    font-size: 12px;
+    font-weight: bold;
+    flex-shrink: 0;
+}
+
+.requirement-success {
+    color: #198754;
+}
+
+.requirement-success span {
+    background-color: #198754;
+    color: white;
+}
+
+/* Password input and eye button */
+
+.password-input {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.password-input input {
+    width: 100%;
+    padding-right: 65px;
+    margin-bottom: 0;
+}
+
+.password-toggle {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    color: #164e78;
+    font-size: 18px;
+    cursor: pointer;
+    padding: 4px;
+    line-height: 1;
+}
+
+.password-toggle:hover {
+    color: #f4b942;
+    transform: translateY(-50%) scale(1.1);
+}
+
+/* Password reset pages */
+
+.auth-card ul {
+    padding-left: 20px;
+    color: #666;
+    line-height: 1.6;
+}
+
+.auth-card .helptext {
+    display: block;
+    margin-top: 6px;
+    color: #777;
+    font-size: 13px;
+    line-height: 1.5;
+}
+
+.auth-card .errorlist {
+    margin: 6px 0 12px;
+    padding-left: 20px;
+    color: #dc3545;
+    font-size: 14px;
+}
+
+.auth-card input {
+    margin-bottom: 4px;
+}
+
+.auth-card button {
+    margin-top: 5px;
+}
+
+.password-reset-message {
+    background-color: #f4f6f8;
+    border-left: 4px solid #f4b942;
+    padding: 15px;
+    margin: 20px 0;
+    color: #555;
+    line-height: 1.6;
+    border-radius: 5px;
+}
+
+/* Footer */
+
+footer {
     background-color: #0b1f3a;
     color: white;
-    border: none;
-    padding: 9px 16px;
-    margin-right: 12px;
-    border-radius: 5px;
-    font-weight: bold;
-    cursor: pointer;
+    text-align: center;
+    padding: 25px;
+    margin-top: 60px;
 }
 
-.form-card input[type="file"]::file-selector-button:hover {
-    background-color: #164e78;
+/* Mobile responsiveness */
+
+@media (max-width: 600px) {
+
+    header {
+        padding: 20px;
+    }
+
+    nav {
+        gap: 12px;
+    }
+
+    nav a {
+        display: inline-block;
+    }
+
+    main {
+        padding: 20px 15px;
+    }
+
+    .hero {
+        padding: 55px 20px;
+    }
+
+    .hero h2 {
+        font-size: 32px;
+    }
+
+    .hero p {
+        font-size: 17px;
+    }
+
+    .auth-card,
+    .form-card {
+        padding: 25px 20px;
+    }
+
+    .detail-content {
+        padding: 25px 20px;
+    }
+
+    .detail-actions {
+        flex-direction: column;
+    }
+
+    .action-button {
+        width: 100%;
+    }
 }

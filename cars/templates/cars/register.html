@@ -7,13 +7,115 @@
         <h2>Create Your Account</h2>
         <p class="auth-subtitle">Join Mipango Car Dealership today.</p>
 
-    <form method="post">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit" class="auth-button">Register</button>
-    </form>
+        <form method="post">
+            {% csrf_token %}
+            <p>
+                {{ form.username.label_tag }}
+                {{ form.username }}
+                {{ form.username.errors }}
+            </p>
 
-    <p class="auth-link">Already have an account?<a href="{% url 'login' %}">Login here</a></p>
+            <p>
+                {{ form.email.label_tag }}
+                {{ form.email }}
+                {{ form.email.errors }}
+            </p>
+
+            <p>
+                {{ form.password1.label_tag }}
+
+                <div class="password-input">
+                    {{ form.password1 }}
+                    <button type="button" class="password-toggle"
+                            onclick="togglePassword('id_password1', this)">
+                        Show
+                    </button>
+                </div>
+
+                {{ form.password1.errors }}
+            </p>
+
+            <div class="password-requirements">
+                <p>Password requirements:</p>
+
+                <div id="length-check" class="requirement">
+                    <span>✗</span> At least 8 characters
+                </div>
+
+                <div id="numeric-check" class="requirement">
+                    <span>✗</span> Not entirely numeric
+                </div>
+
+                <div id="similarity-check" class="requirement">
+                    <span>✗</span> Not too similar to your username or email
+                </div>
+            </div>
+
+            <p>
+                {{ form.password2.label_tag }}
+
+                <div class="password-input">
+                    {{ form.password2 }}
+                    <button type="button" class="password-toggle" onclick="togglePassword('id_password2', this)">Show</button>
+                </div>
+
+                {{ form.password2.errors }}
+            </p>
+
+            <div id="match-check" class="requirement">
+            <span>✗</span> Passwords match
+            </div>
+
+            <button type="submit" class="auth-button">Register</button>
+        </form>
+
+        <p class="auth-link">Already have an account?<a href="{% url 'login' %}">Login here</a></p>
+    </div>
 </div>
-</div>
+
+<script>
+    const password = document.getElementById('id_password1');
+    const confirmPassword = document.getElementById('id_password2');
+    const username = document.getElementById('id_username');
+    const email = document.getElementById('id_email');
+
+    function updateRequirement(id, passed) {
+        const requirement = document.getElementById(id);
+        const icon = requirement.querySelector('span');
+
+        if (passed) {icon.textContent = '✓'; requirement.classList.add('requirement-success');}
+        else {icon.textContent = '✗'; requirement.classList.remove('requirement-success');}
+    }
+
+    function checkPassword() {
+        const value = password.value;
+        updateRequirement('length-check',value.length >= 8);
+        updateRequirement('numeric-check', value.length > 0 && !/^\d+$/.test(value));
+   
+        const userValue = username.value.toLowerCase();
+        const emailValue = email.value.toLowerCase();
+        const passwordValue = value.toLowerCase();
+        const similarToUsername =userValue.length > 0 &&passwordValue.includes(userValue);
+        const emailName =emailValue.split('@')[0];
+        const similarToEmail =emailName.length > 0 &&passwordValue.includes(emailName);
+        updateRequirement('similarity-check',value.length > 0 &&!similarToUsername &&!similarToEmail);
+        checkPasswordMatch();
+    }
+
+    function checkPasswordMatch() {
+        updateRequirement('match-check',password.value.length > 0 &&confirmPassword.value.length > 0 &&password.value === confirmPassword.value);
+    }
+
+    function togglePassword(id, button) {
+        const field = document.getElementById(id);
+        if (field.type === 'password') {field.type = 'text';button.textContent = 'Hide';} 
+        else {field.type = 'password';button.textContent = 'Show';}
+    }
+
+    password.addEventListener('input', checkPassword);
+    confirmPassword.addEventListener('input', checkPasswordMatch);
+    username.addEventListener('input', checkPassword);
+    email.addEventListener('input', checkPassword);
+</script>
+
 {% endblock %}
