@@ -17,9 +17,10 @@ def car_detail(request, pk):
 def car_create(request):
     if request.method == 'POST':
         form = CarForm(request.POST, request.FILES)
-        if form.is_valid():
-            form.save()
-            return redirect('car_list')
+        car = form.save(commit=False)
+        car.seller = request.user
+        car.save()
+        return redirect('car_list')
     else:
         form = CarForm()
     return render(request, 'cars/car_form.html', {'form': form})
@@ -27,6 +28,9 @@ def car_create(request):
 @login_required
 def car_update(request, pk):
     car = get_object_or_404(Car, pk=pk)
+    if car.seller != request.user:
+        return redirect('car_detail', pk=car.pk)
+
     if request.method == 'POST':
         form = CarForm(request.POST, request.FILES, instance=car)
         if form.is_valid():
@@ -34,16 +38,24 @@ def car_update(request, pk):
             return redirect('car_detail', pk=car.pk)
     else:
         form = CarForm(instance=car)
-    return render(request, 'cars/car_form.html', {'form': form})
+
+    return render(request, 'cars/car_form.html', {
+        'form': form,
+        'car': car
+    })
 
 @login_required
 def car_delete(request, pk):
     car = get_object_or_404(Car, pk=pk)
+    if car.seller != request.user:
+        return redirect('car_detail', pk=car.pk)
     if request.method == 'POST':
         car.delete()
         return redirect('car_list')
-    return render(request, 'cars/car_confirm_delete.html', {'car': car})
 
+    return render(request, 'cars/car_confirm_delete.html', {
+        'car': car
+    })
 def register(request):
     if request.method == 'POST':
         form = RegisterForm(request.POST)
