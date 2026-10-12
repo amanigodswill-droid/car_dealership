@@ -716,3 +716,30 @@ footer {
         width: 100%;
     }
 }
+
+
+.delete-confirm-button {
+    background-color: #dc3545;
+    color: white;
+}
+
+.delete-confirm-button:hover {
+    background-color: #b02a37;
+}
+
+.cancel-button {
+    display: block;
+    width: 100%;
+    margin-top: 12px;
+    padding: 12px;
+    background-color: #0b1f3a;
+    color: white;
+    text-align: center;
+    text-decoration: none;
+    font-weight: bold;
+    border-radius: 6px;
+}
+
+.cancel-button:hover {
+    background-color: #164e78;
+}

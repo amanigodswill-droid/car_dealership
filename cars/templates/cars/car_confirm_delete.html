@@ -1,12 +1,16 @@
 {% extends 'cars/base.html' %}
-{% block title %}Delete Car{% endblock %}
+{% block title %}Delete Car - Mipango Car Dealership{% endblock %}
 {% block content %}
-<h2>Delete Car</h2>
-<p>Are you sure you want to delete {{ car.brand }} {{ car.model }}?</p>
-<form method="post">
-    {% csrf_token %}
-    <button type="submit">Yes, Delete</button>
-</form>
+<div class="auth-container">
+    <div class="auth-card">
+        <h2>Delete Car</h2>
+        <p class="auth-subtitle">Are you sure you want to delete {{ car.brand }} {{ car.model }}?</p>
 
-<a href="{% url 'car_detail' car.id %}">Cancel</a>
+        <form method="post">
+            {% csrf_token %}
+            <button type="submit" class="auth-button delete-confirm-button">Yes, Delete</button>
+        </form>
+        <a href="{% url 'car_detail' car.id %}" class="cancel-button">Cancel</a>
+    </div>
+</div>
 {% endblock %}
