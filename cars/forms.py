@@ -2,7 +2,7 @@ from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 
-from .models import Car, SellerProfile 
+from .models import Car, SellerProfile , CustomerReview
 
 class CarForm(forms.ModelForm):
     class Meta:
@@ -37,4 +37,23 @@ class SellerProfileForm(forms.ModelForm):
         labels = {
             'phone': 'Phone Number',
             'location': 'Your Location',
+        }
+
+class CustomerReviewForm(forms.ModelForm):
+    class Meta:
+        model = CustomerReview
+        fields = ['rating', 'comment']
+        labels = {
+            'rating': 'Your Rating',
+            'comment': 'Your Review',
+        }
+        widgets = {
+            'rating': forms.Select(attrs={
+                'class': 'form-control',
+            }),
+            'comment': forms.Textarea(attrs={
+                'class': 'form-control',
+                'rows': 4,
+                'placeholder': 'Share your experience with this seller...',
+            }),
         }
