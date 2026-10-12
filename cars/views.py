@@ -195,3 +195,25 @@ def seller_sale_requests(request):
     return render(request, 'cars/seller_sale_requests.html', {
         'sales': sales,
     })
+
+@login_required
+def update_sale_status(request, sale_id):
+    sale = get_object_or_404(CarSale,pk=sale_id,seller=request.user)
+
+    if request.method == 'POST':
+        status = request.POST.get('status')
+
+        if status in ['completed', 'cancelled']:
+            if status == 'completed':
+                existing_sale = CarSale.objects.filter(
+                    car=sale.car,
+                    status='completed'
+                ).exclude(pk=sale.pk).exists()
+
+                if existing_sale:
+                    return redirect('seller_sale_requests')
+
+            sale.status = status
+            sale.save()
+
+    return redirect('seller_sale_requests')
