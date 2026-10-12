@@ -109,14 +109,12 @@ def seller_profile(request):
 @login_required
 def car_inquire(request, pk):
     car = get_object_or_404(Car, pk=pk)
-    seller_profile, created = SellerProfile.objects.get_or_create(
-        user=car.seller
-    )
-
+    seller_profile, created = SellerProfile.objects.get_or_create(user=car.seller)
     return render(request, 'cars/car_inquire.html', {
         'car': car,
         'seller_profile': seller_profile
     })
+
 
 @login_required
 def car_review(request, pk):
@@ -126,10 +124,12 @@ def car_review(request, pk):
     if seller == request.user:
         return redirect('car_detail', pk=car.pk)
 
-    existing_review = CustomerReview.objects.filter(
-        customer=request.user,
-        seller=seller
-    ).first()
+    completed_purchase = CarSale.objects.filter(buyer=request.user,seller=seller, status='completed').exists()
+   
+    if not completed_purchase:
+        return redirect('car_detail', pk=car.pk)
+
+    existing_review = CustomerReview.objects.filter(customer=request.user, seller=seller).first()
 
     if existing_review:
         return redirect('car_detail', pk=car.pk)
