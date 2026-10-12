@@ -4,7 +4,6 @@
 
 <div class="detail-container">
     <div class="detail-card">
-
         {% if car.image %}
             <img class="detail-image" src="{{ car.image.url }}" alt="{{ car.brand }} {{ car.model }}">
         {% endif %}
@@ -12,25 +11,44 @@
         <div class="detail-content">
 
             <h2>{{ car.brand }} {{ car.model }}</h2>
-
             <p><strong>Year:</strong> {{ car.year }}</p>
             <p><strong>Price:</strong> KSh {{ car.price }}</p>
-            <p><strong>Seller:</strong> {{ car.seller.username }}</p>
             <p><strong>Description:</strong></p>
             <p>{{ car.description }}</p>
 
-            <div class="detail-actions">
+            <div class="seller-contact">
+                <h3>Seller Contact Information</h3>
+                <p><strong>Seller:</strong> {{ car.seller.username }}</p>
+                <p><strong>Phone:</strong>
+                    {% if seller_profile.phone %}
+                        {{ seller_profile.phone }}
+                    {% else %}
+                        Not provided
+                    {% endif %}
+                </p>
+
+                <p><strong>Location:</strong>
+                    {% if seller_profile.location %}
+                        {{ seller_profile.location }}
+                    {% else %}
+                        Not provided
+                    {% endif %}
+                </p>
 
                 {% if user.is_authenticated %}
-                    <a href="{% url 'car_inquire' car.id %}" class="action-button inquire-button">Inquire</a>
+                    <a href="{% url 'car_inquire' car.id %}" class="action-button inquire-button">Inquire</a></a>
                 {% else %}
                     <a href="{% url 'login' %}?next={% url 'car_inquire' car.id %}" class="action-button inquire-button">Login to Inquire</a>
                 {% endif %}
+            </div>
+
+            <div class="detail-actions">
 
                 {% if user == car.seller %}
                     <a href="{% url 'car_update' car.id %}" class="action-button edit-button">Edit Car</a>
                     <a href="{% url 'car_delete' car.id %}" class="action-button delete-button">Delete Car</a>
                 {% endif %}
+
                 <a href="{% url 'car_list' %}" class="action-button back-button">Back to Cars</a>
 
             </div>

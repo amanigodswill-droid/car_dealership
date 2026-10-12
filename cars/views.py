@@ -11,7 +11,11 @@ def car_list(request):
 
 def car_detail(request, pk):
     car = get_object_or_404(Car, pk=pk)
-    return render(request, 'cars/car_detail.html', {'car': car})
+    seller_profile, created = SellerProfile.objects.get_or_create(
+        user=car.seller
+    )
+
+    return render(request, 'cars/car_detail.html', {'car': car, 'seller_profile': seller_profile})
     
 @login_required
 def car_create(request):
