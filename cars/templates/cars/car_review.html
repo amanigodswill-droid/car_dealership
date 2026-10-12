@@ -1,0 +1,41 @@
+{% extends 'cars/base.html' %}
+{% block title %}Review Seller - Mipango Car Dealership{% endblock %}
+{% block content %}
+<div class="auth-container">
+    <div class="auth-card">
+        <h2>Review Seller</h2>
+
+        <p class="auth-subtitle">Share your experience with the seller of {{ car.brand }} {{ car.model }}.</p>
+
+        <form method="post">
+            {% csrf_token %}
+            {% if form.non_field_errors %}
+                <div class="error-message">
+                    {{ form.non_field_errors }}
+                </div>
+            {% endif %}
+
+            <div class="form-group">
+                {{ form.rating.label_tag }}
+                {{ form.rating }}
+                {% for error in form.rating.errors %}
+                    <p class="error-message">{{ error }}</p>
+                {% endfor %}
+            </div>
+
+            <div class="form-group">
+                {{ form.comment.label_tag }}
+                {{ form.comment }}
+
+                {% for error in form.comment.errors %}
+                    <p class="error-message">{{ error }}</p>
+                {% endfor %}
+            </div>
+
+            <button type="submit" class="auth-button">Submit Review</button>
+        </form>
+
+        <p class="auth-link"><a href="{% url 'car_detail' car.pk %}">Back to Car Details</a></p>
+    </div>
+</div>
+{% endblock %}
