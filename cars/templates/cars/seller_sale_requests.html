@@ -6,7 +6,6 @@
         <div class="detail-content">
             <h2>Purchase Requests</h2>
             <p>View customers interested in purchasing your cars.</p>
-
             {% if sales %}
                 {% for sale in sales %}
                     <div class="review-item">
@@ -18,6 +17,14 @@
                         <p><strong>Status:</strong> {{ sale.get_status_display }}</p>
                         <p><strong>Request Date:</strong> {{ sale.date_created|date:"d M Y" }}</p>
                         <a href="{% url 'car_detail' sale.car.pk %}" class="action-button">View Car</a>
+                          {% if sale.status == 'pending' %}
+                            <form method="post" action="{% url 'update_sale_status' sale.id %}">
+                              {% csrf_token %}
+                              <button type="submit" name="status" value="completed" class="action-button">Mark as Completed</button>
+                              <button type="submit" name="status" value="cancelled" class="action-button">Cancel Request</button>
+                            </form>
+                          {% endif %}
+
                     </div>
                 {% endfor %}
             {% else %}
