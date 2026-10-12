@@ -41,6 +41,9 @@
                 {% else %}
                     <a href="{% url 'login' %}?next={% url 'car_inquire' car.id %}" class="action-button inquire-button">Login to Inquire</a>
                 {% endif %}
+                {% if user.is_authenticated and user != car.seller %}
+                    <a href="{% url 'car_purchase_request' car.pk %}" class="action-button">Request to Purchase</a>
+                {% endif %}
             </div>
 
             <div class="detail-actions">
