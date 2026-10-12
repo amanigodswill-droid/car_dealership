@@ -2,7 +2,7 @@ from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 
-from .models import Car, SellerProfile , CustomerReview
+from .models import Car, SellerProfile , CustomerReview, CarSale
 
 class CarForm(forms.ModelForm):
     class Meta:
@@ -55,5 +55,28 @@ class CustomerReviewForm(forms.ModelForm):
                 'class': 'form-control',
                 'rows': 4,
                 'placeholder': 'Share your experience with this seller...',
+            }),
+        }
+
+class CarSaleForm(forms.ModelForm):
+    class Meta:
+        model = CarSale
+        fields = ['buyer', 'agreed_price', 'status']
+        labels = {
+            'buyer': 'Buyer',
+            'agreed_price': 'Agreed Price (KSh)',
+            'status': 'Sale Status',
+        }
+        widgets = {
+            'buyer': forms.Select(attrs={
+                'class': 'form-control',
+            }),
+            'agreed_price': forms.NumberInput(attrs={
+                'class': 'form-control',
+                'min': '0.01',
+                'step': '0.01',
+            }),
+            'status': forms.Select(attrs={
+                'class': 'form-control',
             }),
         }
