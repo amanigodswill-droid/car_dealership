@@ -1,6 +1,7 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
+from django.core.serializers import python
 
 from .models import Car, SellerProfile , CustomerReview, CarSale
 
@@ -61,22 +62,14 @@ class CustomerReviewForm(forms.ModelForm):
 class CarSaleForm(forms.ModelForm):
     class Meta:
         model = CarSale
-        fields = ['buyer', 'agreed_price', 'status']
+        fields = ['agreed_price']
         labels = {
-            'buyer': 'Buyer',
-            'agreed_price': 'Agreed Price (KSh)',
-            'status': 'Sale Status',
+            'agreed_price': 'Proposed Purchase Price (KSh)',
         }
         widgets = {
-            'buyer': forms.Select(attrs={
-                'class': 'form-control',
-            }),
             'agreed_price': forms.NumberInput(attrs={
                 'class': 'form-control',
                 'min': '0.01',
                 'step': '0.01',
-            }),
-            'status': forms.Select(attrs={
-                'class': 'form-control',
             }),
         }
