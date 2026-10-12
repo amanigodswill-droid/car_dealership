@@ -1,4 +1,3 @@
-
 {% extends 'cars/base.html' %}
 {% block title %}My Seller Profile - Mipango Car Dealership{% endblock %}
 {% block content %}
@@ -10,10 +9,18 @@
 
         <form method="post">
             {% csrf_token %}
-            {{ form.as_p }}
-            <button type="submit" class="submit-button">Save Profile</button>
+            {{ form.non_field_errors }}
+            {% for field in form %}
+              <p>
+                {{ field.label_tag }}
+                {{ field }}
+                 {% for error in field.errors %}
+                <span style="color: red;">{{ error }}</span>
+                {% endfor %}
+              </p>
+            {% endfor %}
+            <button type="submit" class="form-button">Save Profile</button>
         </form>
-
         <p><a href="{% url 'car_list' %}" class="action-button back-button">Back to Cars</a></p>
 
     </div>

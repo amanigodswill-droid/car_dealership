@@ -100,3 +100,16 @@ def seller_profile(request):
     return render(request, 'cars/seller_profile.html', {
         'form': form
     })
+
+
+@login_required
+def car_inquire(request, pk):
+    car = get_object_or_404(Car, pk=pk)
+    seller_profile, created = SellerProfile.objects.get_or_create(
+        user=car.seller
+    )
+
+    return render(request, 'cars/car_inquire.html', {
+        'car': car,
+        'seller_profile': seller_profile
+    })

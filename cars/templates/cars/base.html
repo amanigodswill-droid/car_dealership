@@ -4,25 +4,32 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% block title %}Car Dealership{% endblock %}</title>
+
+    <title>{% block title %}Mipango Car Dealership{% endblock %}</title>
+
     <link rel="stylesheet" type="text/css" href="{% static 'cars/css/styles.css' %}">
 </head>
+
 <body>
     <header>
         <h1>Mipango Car Dealership</h1>
         <nav>
             <a href="{% url 'car_list' %}">Cars</a>
-           
+
             {% if user.is_authenticated %}
                 <a href="{% url 'car_create' %}">Add Car</a>
+                <a href="{% url 'seller_profile' %}">My Seller Profile</a>
+
                 <span>Welcome, {{ user.username }}</span>
+
                 <form method="post" action="{% url 'logout' %}" style="display: inline;">
-                {% csrf_token %}
-                <button type="submit" class="logout-button">Logout</button>
+                    {% csrf_token %}
+                    <button type="submit" class="logout-button">Logout</button>
                 </form>
-                {%else%}
-               <a href="{% url 'login' %}">Login</a>
-               <a href="{% url 'register' %}">Register</a>
+
+            {% else %}
+                <a href="{% url 'login' %}">Login</a>
+                <a href="{% url 'register' %}">Register</a>
             {% endif %}
         </nav>
     </header>
