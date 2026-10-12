@@ -185,3 +185,13 @@ def car_purchase_request(request, pk):
         'form': form,
         'car': car,
     })
+
+@login_required
+def seller_sale_requests(request):
+    sales = CarSale.objects.filter(
+        seller=request.user
+    ).select_related('car', 'buyer').order_by('-date_created')
+
+    return render(request, 'cars/seller_sale_requests.html', {
+        'sales': sales,
+    })
