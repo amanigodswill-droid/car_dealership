@@ -10,19 +10,20 @@
                 {% for sale in sales %}
                     <div class="review-item">
                         <h3>{{ sale.car.brand }} {{ sale.car.model }}</h3>
-
                         <p><strong>Buyer:</strong> {{ sale.buyer.username }}</p>
                         <p><strong>Year:</strong> {{ sale.car.year }}</p>
                         <p><strong>Agreed Price:</strong> KSh {{ sale.agreed_price }}</p>
-                        <p><strong>Status:</strong> {{ sale.get_status_display }}</p>
+                        <p><strong>Status:</strong><span class="sale-status">{{ sale.get_status_display }}</span></p>
                         <p><strong>Request Date:</strong> {{ sale.date_created|date:"d M Y" }}</p>
                         <a href="{% url 'car_detail' sale.car.pk %}" class="action-button">View Car</a>
                           {% if sale.status == 'pending' %}
+                           <div class="sale-request-actions">
                             <form method="post" action="{% url 'update_sale_status' sale.id %}">
                               {% csrf_token %}
-                              <button type="submit" name="status" value="completed" class="action-button">Mark as Completed</button>
-                              <button type="submit" name="status" value="cancelled" class="action-button">Cancel Request</button>
+                              <button type="submit" name="status" value="completed" class="action-button complete-button">Mark as Completed</button>
+                              <button type="submit" name="status" value="cancelled" class="action-button cancel-request-button">Cancel Request</button>
                             </form>
+                           </div>
                           {% endif %}
 
                     </div>

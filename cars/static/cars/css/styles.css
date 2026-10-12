@@ -652,3 +652,67 @@ footer {
         padding: 14px;
     }
 }
+
+
+.purchase-request-form {
+    margin-top: 25px;
+}
+
+.purchase-request-form .action-button {
+    border: none;
+    cursor: pointer;
+    font-family: Arial, sans-serif;
+    font-size: 14px;
+}
+
+.complete-button {
+    background-color: #198754;
+    color: white;
+}
+
+.complete-button:hover {
+    background-color: #146c43;
+}
+
+.cancel-request-button {
+    background-color: #dc3545;
+    color: white;
+}
+
+.cancel-request-button:hover {
+    background-color: #b02a37;
+}
+
+.sale-status {
+    display: inline-block;
+    padding: 5px 10px;
+    border-radius: 20px;
+    background-color: #e9ecef;
+    color: #0b1f3a;
+    font-size: 13px;
+    font-weight: bold;
+}
+
+.sale-request-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 18px;
+}
+
+.sale-request-actions form {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+@media (max-width: 600px) {
+    .sale-request-actions,
+    .sale-request-actions form {
+        flex-direction: column;
+    }
+
+    .sale-request-actions .action-button {
+        width: 100%;
+    }
+}
