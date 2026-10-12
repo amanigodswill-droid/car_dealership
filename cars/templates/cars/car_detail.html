@@ -52,7 +52,7 @@
                     <a href="{% url 'car_delete' car.id %}" class="action-button delete-button">Delete Car</a>
                 {% endif %}
 
-                {% if user.is_authenticated and user != car.seller %}
+                {% if can_review %}
                     <a href="{% url 'car_review' car.id %}" class="action-button review-button">Review Seller</a>
                 {% endif %}
 

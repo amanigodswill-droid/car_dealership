@@ -10,15 +10,23 @@ def car_list(request):
     cars = Car.objects.all()
     return render(request, 'cars/car_list.html', {'cars': cars})
 
+
 def car_detail(request, pk):
     car = get_object_or_404(Car, pk=pk)
     seller_profile, created = SellerProfile.objects.get_or_create(user=car.seller)
-    reviews = CustomerReview.objects.filter( seller=car.seller).select_related('customer')
+    reviews = CustomerReview.objects.filter(seller=car.seller).select_related('customer')
+    can_review = False
+
+    if request.user.is_authenticated and request.user != car.seller:
+        completed_purchase = CarSale.objects.filter(buyer=request.user, seller=car.seller, status='completed').exists()
+        existing_review = CustomerReview.objects.filter(customer=request.user,seller=car.seller).exists()
+        can_review = completed_purchase and not existing_review
 
     return render(request, 'cars/car_detail.html', {
         'car': car,
         'seller_profile': seller_profile,
         'reviews': reviews,
+        'can_review': can_review,
     })
 
 @login_required
