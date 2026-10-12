@@ -1,0 +1,34 @@
+{% extends 'cars/base.html' %}
+{% block title %}Purchase Request - Mipango Car Dealership{% endblock %}
+{% block content %}
+<div class="auth-container">
+    <div class="auth-card">
+        <h2>Purchase Request</h2>
+        <p class="auth-subtitle">Submit a purchase request for {{ car.brand }} {{ car.model }}.</p>
+        <p><strong>Year:</strong> {{ car.year }}</p>
+        <p><strong>Listed Price:</strong> KSh {{ car.price }}</p>
+        <p><strong>Seller:</strong> {{ car.seller.username }}</p>
+
+        <form method="post">
+            {% csrf_token %}
+            {% if form.non_field_errors %}
+                <div class="error-message">
+                    {{ form.non_field_errors }}
+                </div>
+            {% endif %}
+
+            <div class="form-group">
+                {{ form.agreed_price.label_tag }}
+                {{ form.agreed_price }}
+                {% for error in form.agreed_price.errors %}
+                    <p class="error-message">{{ error }}</p>
+                {% endfor %}
+            </div>
+
+            <button type="submit" class="auth-button">Submit Purchase Request</button>
+        </form>
+
+        <p class="auth-link"><a href="{% url 'car_detail' car.pk %}">Back to Car Details</a></p>
+    </div>
+</div>
+{% endblock %}
