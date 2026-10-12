@@ -2,8 +2,8 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth import login
 from django.contrib.auth.forms import AuthenticationForm
 from django.shortcuts import render, redirect, get_object_or_404
-from .forms import CarForm, RegisterForm
-from .models import Car
+from .forms import CarForm, RegisterForm, SellerProfileForm
+from .models import Car, SellerProfile
     
 def car_list(request):
     cars = Car.objects.all()
@@ -77,3 +77,22 @@ def user_login(request):
     else:
         form = AuthenticationForm()
     return render(request, 'cars/login.html', {'form': form})
+
+
+@login_required
+def seller_profile(request):
+    profile, created = SellerProfile.objects.get_or_create(
+        user=request.user)
+
+    if request.method == 'POST':
+        form = SellerProfileForm(request.POST, instance=profile)
+
+        if form.is_valid():
+            form.save()
+            return redirect('seller_profile')
+    else:
+        form = SellerProfileForm(instance=profile)
+
+    return render(request, 'cars/seller_profile.html', {
+        'form': form
+    })

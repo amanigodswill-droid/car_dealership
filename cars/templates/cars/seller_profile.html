@@ -1,0 +1,22 @@
+
+{% extends 'cars/base.html' %}
+{% block title %}My Seller Profile - Mipango Car Dealership{% endblock %}
+{% block content %}
+
+<div class="form-container">
+    <div class="form-card">
+        <h2>My Seller Profile</h2>
+        <p>Update your contact details so buyers can reach you.</p>
+
+        <form method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit" class="submit-button">Save Profile</button>
+        </form>
+
+        <p><a href="{% url 'car_list' %}" class="action-button back-button">Back to Cars</a></p>
+
+    </div>
+</div>
+
+{% endblock %}
