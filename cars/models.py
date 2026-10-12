@@ -44,3 +44,21 @@ class CustomerReview(models.Model):
 
     def __str__(self):
         return f"Review by {self.customer.username} for {self.seller.username}"
+
+class CarSale(models.Model):
+    STATUS_CHOICES = [
+        ('pending', 'Pending'),
+        ('completed', 'Completed'),
+        ('cancelled', 'Cancelled'),
+    ]
+
+    car = models.ForeignKey(Car, on_delete=models.PROTECT, related_name='sales')
+    buyer = models.ForeignKey(User, on_delete=models.PROTECT, related_name='car_purchases')
+    seller = models.ForeignKey(User, on_delete=models.PROTECT, related_name='car_sales')  
+    agreed_price = models.DecimalField(max_digits=12,decimal_places=2)
+    status = models.CharField(max_length=10,choices=STATUS_CHOICES,default='pending')
+    date_created = models.DateTimeField(auto_now_add=True)
+    date_updated = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return f"{self.car} - {self.buyer.username} - {self.status}"
