@@ -3,8 +3,8 @@ from django.contrib.auth import login
 from django.contrib.auth.forms import AuthenticationForm
 from django.core.serializers import python
 from django.shortcuts import render, redirect, get_object_or_404
-from .forms import CarForm, RegisterForm, SellerProfileForm, CustomerReviewForm
-from .models import Car, SellerProfile , CustomerReview
+from .forms import CarForm, RegisterForm, SellerProfileForm, CustomerReviewForm, CarSaleForm
+from .models import Car, SellerProfile , CustomerReview, CarSale
     
 def car_list(request):
     cars = Car.objects.all()
@@ -148,6 +148,40 @@ def car_review(request, pk):
         form = CustomerReviewForm()
 
     return render(request, 'cars/car_review.html', {
+        'form': form,
+        'car': car,
+    })
+
+@login_required
+def car_purchase_request(request, pk):
+    car = get_object_or_404(Car, pk=pk)
+
+    if car.seller == request.user:
+        return redirect('car_detail', pk=car.pk)
+    active_sale = CarSale.objects.filter(
+        car=car,
+        status__in=['pending', 'completed']
+    ).exists()
+
+    if active_sale:
+        return redirect('car_detail', pk=car.pk)
+
+    if request.method == 'POST':
+        form = CarSaleForm(request.POST)
+
+        if form.is_valid():
+            sale = form.save(commit=False)
+            sale.car = car
+            sale.buyer = request.user
+            sale.seller = car.seller
+            sale.status = 'pending'
+            sale.save()
+
+            return redirect('car_detail', pk=car.pk)
+    else:
+        form = CarSaleForm()
+
+    return render(request, 'cars/car_sale_request.html', {
         'form': form,
         'car': car,
     })
