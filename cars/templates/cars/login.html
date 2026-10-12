@@ -28,14 +28,7 @@
                 <div class="password-input">
                     {{ form.password }}
 
-                    <button
-                        type="button"
-                        class="password-toggle"
-                        onclick="toggleLoginPassword()"
-                        aria-label="Show password"
-                    >
-                        Show
-                    </button>
+                    <button type="button" class="password-toggle" onclick="toggleLoginPassword()" aria-label="Show password">Show</button>
                 </div>
 
                 {% for error in form.password.errors %}
