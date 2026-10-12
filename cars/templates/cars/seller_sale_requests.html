@@ -1,0 +1,31 @@
+{% extends 'cars/base.html' %}
+{% block title %}Purchase Requests - Mipango Car Dealership{% endblock %}
+{% block content %}
+<div class="detail-container">
+    <div class="detail-card">
+        <div class="detail-content">
+            <h2>Purchase Requests</h2>
+            <p>View customers interested in purchasing your cars.</p>
+
+            {% if sales %}
+                {% for sale in sales %}
+                    <div class="review-item">
+                        <h3>{{ sale.car.brand }} {{ sale.car.model }}</h3>
+
+                        <p><strong>Buyer:</strong> {{ sale.buyer.username }}</p>
+                        <p><strong>Year:</strong> {{ sale.car.year }}</p>
+                        <p><strong>Agreed Price:</strong> KSh {{ sale.agreed_price }}</p>
+                        <p><strong>Status:</strong> {{ sale.get_status_display }}</p>
+                        <p><strong>Request Date:</strong> {{ sale.date_created|date:"d M Y" }}</p>
+                        <a href="{% url 'car_detail' sale.car.pk %}" class="action-button">View Car</a>
+                    </div>
+                {% endfor %}
+            {% else %}
+                <p>You have no purchase requests yet.</p>
+            {% endif %}
+
+            <p class="auth-link"><a href="{% url 'car_list' %}">Back to Cars</a></p>
+        </div>
+    </div>
+</div>
+{% endblock %}
