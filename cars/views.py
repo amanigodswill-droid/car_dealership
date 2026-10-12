@@ -12,12 +12,15 @@ def car_list(request):
 
 def car_detail(request, pk):
     car = get_object_or_404(Car, pk=pk)
-    seller_profile, created = SellerProfile.objects.get_or_create(
-        user=car.seller
-    )
+    seller_profile, created = SellerProfile.objects.get_or_create(user=car.seller)
+    reviews = CustomerReview.objects.filter( seller=car.seller).select_related('customer')
 
-    return render(request, 'cars/car_detail.html', {'car': car, 'seller_profile': seller_profile})
-    
+    return render(request, 'cars/car_detail.html', {
+        'car': car,
+        'seller_profile': seller_profile,
+        'reviews': reviews,
+    })
+
 @login_required
 def car_create(request):
     if request.method == 'POST':
