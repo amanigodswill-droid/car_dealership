@@ -9,7 +9,7 @@
         <p><strong>Listed Price:</strong> KSh {{ car.price }}</p>
         <p><strong>Seller:</strong> {{ car.seller.username }}</p>
 
-        <form method="post">
+        <form method="post" class="purchase-request-form">
             {% csrf_token %}
             {% if form.non_field_errors %}
                 <div class="error-message">
