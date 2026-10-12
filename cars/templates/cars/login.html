@@ -1,21 +1,73 @@
 {% extends 'cars/base.html' %}
 {% block title %}Login - Mipango Car Dealership{% endblock %}
 {% block content %}
-
 <div class="auth-container">
     <div class="auth-card">
         <h2>Welcome Back</h2>
         <p class="auth-subtitle">Login to your Mipango account.</p>
-    <form method="post">
-        {% csrf_token %}
-        {{ form.as_p }}
 
-        <button type="submit" class="auth-button">Login</button>
-        <p class="auth-link"><a href="{% url 'password_reset' %}">Forgot your password?</a></p>
-    </form>
-    <p class="auth-link">Don't have an account?<a href="{% url 'register' %}">Create an account</a></p>
+        <form method="post">
+            {% csrf_token %}
+            {% if form.non_field_errors %}
+                <div class="error-message">
+                    {{ form.non_field_errors }}
+                </div>
+            {% endif %}
+
+            <div class="form-group">
+                {{ form.username.label_tag }}
+                {{ form.username }}
+                {% for error in form.username.errors %}
+                    <p class="error-message">{{ error }}</p>
+                {% endfor %}
+            </div>
+
+            <div class="form-group">
+                {{ form.password.label_tag }}
+
+                <div class="password-input">
+                    {{ form.password }}
+
+                    <button
+                        type="button"
+                        class="password-toggle"
+                        onclick="toggleLoginPassword()"
+                        aria-label="Show password"
+                    >
+                        Show
+                    </button>
+                </div>
+
+                {% for error in form.password.errors %}
+                    <p class="error-message">{{ error }}</p>
+                {% endfor %}
+            </div>
+
+            <button type="submit" class="auth-button">Login</button>
+
+            <p class="auth-link"><a href="{% url 'password_reset' %}">Forgot your password?</a></p>
+        </form>
+
+        <p class="auth-link">Don't have an account?<a href="{% url 'register' %}">Create an account</a></p>
+    </div>
 </div>
 
-</div>
+<script>
+    function toggleLoginPassword() {
+        const passwordField = document.getElementById('id_password');
+        const button = document.querySelector(
+            '.password-toggle'
+        );
 
+        if (passwordField.type === 'password') {
+            passwordField.type = 'text';
+            button.textContent = 'Hide';
+            button.setAttribute('aria-label', 'Hide password');
+        } else {
+            passwordField.type = 'password';
+            button.textContent = 'Show';
+            button.setAttribute('aria-label', 'Show password');
+        }
+    }
+</script>
 {% endblock %}
