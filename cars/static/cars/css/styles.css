@@ -9,8 +9,6 @@ body {
     color: #1f2937;
 }
 
-/* Header and navigation */
-
 header {
     background-color: #0b1f3a;
     color: white;
@@ -44,8 +42,6 @@ nav span {
     font-weight: bold;
 }
 
-/* Logout button */
-
 .logout-button {
     background: none;
     border: none;
@@ -60,15 +56,11 @@ nav span {
     color: #f4b942;
 }
 
-/* Main content */
-
 main {
     max-width: 1100px;
     margin: 0 auto;
     padding: 30px 20px;
 }
-
-/* Homepage hero */
 
 .hero {
     background: linear-gradient(135deg, #0b1f3a, #164e78);
@@ -102,8 +94,6 @@ main {
 .button:hover {
     background-color: #ffd166;
 }
-
-/* Cars section */
 
 .cars-section h2 {
     color: #0b1f3a;
@@ -150,8 +140,6 @@ main {
 .car-card a:hover {
     color: #f4b942;
 }
-
-/* Authentication pages */
 
 .auth-container {
     min-height: 70vh;
@@ -238,8 +226,6 @@ main {
 .auth-link a:hover {
     color: #f4b942;
 }
-
-/* Form pages */
 
 .form-container {
     min-height: 70vh;
@@ -336,8 +322,6 @@ main {
     color: #f4b942;
 }
 
-/* Car image upload */
-
 .form-card input[type="file"] {
     width: 100%;
     padding: 10px;
@@ -362,8 +346,6 @@ main {
 .form-card input[type="file"]::file-selector-button:hover {
     background-color: #164e78;
 }
-
-/* Car details */
 
 .detail-container {
     max-width: 800px;
@@ -443,8 +425,6 @@ main {
     background-color: #164e78;
 }
 
-/* Password requirements */
-
 .password-requirements {
     background-color: #f8fafc;
     border: 1px solid #e1e6eb;
@@ -493,8 +473,6 @@ main {
     color: white;
 }
 
-/* Password input and eye button */
-
 .password-input {
     position: relative;
     display: flex;
@@ -525,8 +503,6 @@ main {
     color: #f4b942;
     transform: translateY(-50%) scale(1.1);
 }
-
-/* Password reset pages */
 
 .auth-card ul {
     padding-left: 20px;
@@ -567,8 +543,6 @@ main {
     border-radius: 5px;
 }
 
-/* Footer */
-
 footer {
     background-color: #0b1f3a;
     color: white;
@@ -577,7 +551,52 @@ footer {
     margin-top: 60px;
 }
 
-/* Mobile responsiveness */
+.seller-reviews {
+    margin-top: 30px;
+    padding-top: 20px;
+    border-top: 1px solid #e2e8f0;
+}
+
+.seller-reviews h3 {
+    margin-bottom: 20px;
+    color: #1e293b;
+    font-size: 22px;
+}
+
+.review-item {
+    margin-bottom: 16px;
+    padding: 18px;
+    background-color: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 10px;
+}
+
+.review-item h4 {
+    margin: 0 0 10px;
+    color: #1e293b;
+    font-size: 16px;
+}
+
+.review-item p {
+    margin: 8px 0;
+    line-height: 1.6;
+    overflow-wrap: anywhere;
+}
+
+.review-item p strong {
+    color: #334155;
+}
+
+.review-item p:first-of-type {
+    color: #f59e0b;
+}
+
+.review-item small {
+    display: block;
+    margin-top: 10px;
+    color: #64748b;
+    font-size: 13px;
+}
 
 @media (max-width: 600px) {
 
@@ -624,5 +643,12 @@ footer {
 
     .action-button {
         width: 100%;
+    }
+    .seller-reviews h3 {
+        font-size: 20px;
+    }
+
+    .review-item {
+        padding: 14px;
     }
 }
