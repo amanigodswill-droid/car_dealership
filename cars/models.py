@@ -22,3 +22,25 @@ class SellerProfile(models.Model):
 
     def __str__(self):
         return self.user.username
+
+class CustomerReview(models.Model):
+    customer = models.ForeignKey(User, on_delete=models.CASCADE, related_name='customer_reviews')
+    seller = models.ForeignKey(User,on_delete=models.CASCADE, related_name='seller_reviews')
+    rating = models.PositiveSmallIntegerField(
+        choices=[
+            (1, '1 Star'),
+            (2, '2 Stars'),
+            (3, '3 Stars'),
+            (4, '4 Stars'),
+            (5, '5 Stars'),
+        ]
+    )
+    comment = models.TextField()
+    date_added = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        unique_together = ('customer', 'seller')
+        ordering = ['-date_added']
+
+    def __str__(self):
+        return f"Review by {self.customer.username} for {self.seller.username}"
